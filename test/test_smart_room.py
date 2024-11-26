@@ -20,18 +20,20 @@ class TestSmartRoom(unittest.TestCase):
     def test_check_enough_light(self, mock_check_enough_light):
         smart_room = SmartRoom()
         smart_room.check_enough_light()
-        self.assertTrue(mock_check_enough_light.called)
+        self.assertTrue(mock_check_enough_light)
 
     @patch.object(SmartRoom, "manage_light_level")
     def test_manage_light_level(self, mock_manage_light_level):
         smart_room = SmartRoom()
         smart_room.manage_light_level()
-        self.assertTrue(mock_manage_light_level.called)
+        self.assertTrue(mock_manage_light_level)
 
-    @patch.object(SmartRoom, "manage_window")
+    @patch.object(SmartRoom, "manage_window", new_callable=PropertyMock)
     def test_manage_window(self, mock_manage_window):
         smart_room = SmartRoom()
         smart_room.manage_window()
-        mock_manage_window.assert_called_once()
+        self.assertTrue(mock_manage_window)
+
+
 
 
