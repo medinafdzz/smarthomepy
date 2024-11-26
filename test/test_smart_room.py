@@ -15,3 +15,9 @@ class TestSmartRoom(unittest.TestCase):
         mock_input.return_value = 1
         smart_room = SmartRoom()
         self.assertTrue(smart_room.check_room_occupancy())
+
+    @patch.object(SmartRoom, "check_enough_light")
+    def test_check_enough_light(self, mock_check_enough_light):
+        smart_room = SmartRoom()
+        smart_room.check_enough_light()
+        mock_check_enough_light.assert_called_once()
