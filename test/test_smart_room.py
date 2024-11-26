@@ -28,33 +28,33 @@ class TestSmartRoom(unittest.TestCase):
         smart_room.manage_light_level()
         self.assertTrue(mock_manage_light_level())
 
-    @patch.object(SmartRoom, 'bmp280_indoor', new_callable=PropertyMock)
+    @patch.object(SmartRoom, 'bmp280_indor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'bmp280_outdoor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'change_servo_angle')
-    def test_manage_window_lower_than_outdoor_temperature_minus_2_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indoor):
+    def test_manage_window_lower_than_outdoor_temperature_minus_2_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indor):
         mock_bmp280_outdoor.temperature = 20
-        mock_bmp280_indoor.temperature = 15
+        mock_bmp280_indor.temperature = 15
         smart_room = SmartRoom()
         smart_room.manage_window()
         mock_change_servo_angle.assert_called_with(10)
 
-    @patch.object(SmartRoom, 'bmp280_indoor', new_callable=PropertyMock)
+    @patch.object(SmartRoom, 'bmp280_indor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'bmp280_outdoor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'change_servo_angle')
-    def test_manage_window_higher_than_outdoor_temperature_plus_2_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indoor):
+    def test_manage_window_higher_than_outdoor_temperature_plus_2_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indor):
         mock_bmp280_outdoor.temperature = 20
-        mock_bmp280_indoor.temperature = 25
+        mock_bmp280_indor.temperature = 25
         smart_room = SmartRoom()
         smart_room.manage_window()
         mock_change_servo_angle.assert_called_with(2)
 
 
-    @patch.object(SmartRoom, 'bmp280_indoor', new_callable=PropertyMock)
+    @patch.object(SmartRoom, 'bmp280_indor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'bmp280_outdoor', new_callable=PropertyMock)
     @patch.object(SmartRoom, 'change_servo_angle')
-    def test_manage_window_between_18_and_30_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indoor):
+    def test_manage_window_between_18_and_30_degrees(self, mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indor):
         mock_bmp280_outdoor.temperature = 20
-        mock_bmp280_indoor.temperature = 20
+        mock_bmp280_indor.temperature = 20
         smart_room = SmartRoom()
         smart_room.manage_window()
         mock_change_servo_angle.assert_not_called()

@@ -31,7 +31,7 @@ class SmartRoom:
         GPIO.setup(self.FAN_PIN, GPIO.OUT)
 
         i2c = board.I2C()
-        self.bmp280_indoor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address=0x76) # indoor sensor
+        self.bmp280_indor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address=0x76) # indoor sensor
         self.bmp280_outdoor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c, address=0x68) # outdoor sensor
 
         self.sensair_s8 = senseair_s8.SenseairS8()  # carbon dioxide sensor
@@ -61,7 +61,7 @@ class SmartRoom:
             SmartRoom.light_on = True
 
     def manage_window(self) -> None:
-        indoor_temp = self.bmp280_indoor.temperature
+        indoor_temp = self.bmp280_indor.temperature
         outdoor_temp = self.bmp280_outdoor.temperature
 
         if 18 <= indoor_temp <= 30 and 18 <= outdoor_temp <= 30:
