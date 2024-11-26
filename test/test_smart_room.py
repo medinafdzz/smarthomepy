@@ -21,3 +21,9 @@ class TestSmartRoom(unittest.TestCase):
         smart_room = SmartRoom()
         smart_room.check_enough_light()
         mock_check_enough_light.assert_called_once()
+
+    @patch.object(SmartRoom, "manage_light_level")
+    def test_manage_light_level(self, mock_manage_light_level):
+        smart_room = SmartRoom()
+        smart_room.manage_light_level()
+        mock_manage_light_level.assert_called_once()
