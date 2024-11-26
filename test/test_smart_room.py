@@ -28,11 +28,20 @@ class TestSmartRoom(unittest.TestCase):
         smart_room.manage_light_level()
         self.assertTrue(mock_manage_light_level)
 
-    @patch.object(SmartRoom, "manage_window", new_callable=PropertyMock)
-    def test_manage_window(self, mock_manage_window):
+    @patch.object(SmartRoom, 'bmp280_indor', new_callable=PropertyMock)
+    @patch.object(SmartRoom, 'bmp280_outdoor', new_callable=PropertyMock)
+    @patch.object(SmartRoom, 'change_servo_angle')
+    def test_manage_window_lower_than_outdoor_temperature_minus_2_degrees(self,mock_change_servo_angle, mock_bmp280_outdoor, mock_bmp280_indor):
         smart_room = SmartRoom()
+        mock_bmp280_indor.return_value.temperature = 20
+        mock_bmp280_outdoor.return_value.temperature = 23
+        smart_room.window_open = False
         smart_room.manage_window()
-        self.assertTrue(mock_manage_window)
+        mock_change_servo_angle.assert_called_with(10)  # Open window (180 degrees)
+        self.assertTrue(smart_room.window_open)
+
+
+
 
 
 
