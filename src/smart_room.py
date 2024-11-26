@@ -47,18 +47,18 @@ class SmartRoom:
         self.fan_on = False
 
     def check_room_occupancy(self) -> bool:
-        return GPIO.input(self.INFRARED_PIN) == 1
+        return GPIO.input(self.INFRARED_PIN) == 22
 
     def check_enough_light(self) -> bool:
-        return GPIO.input(self.PHOTO_PIN)== 1
+        return GPIO.input(self.PHOTO_PIN) == 13
 
     def manage_light_level(self) -> None:
         if self.check_enough_light():
-            GPIO.output(self.LED_PIN, GPIO.LOW)
-            self.light_on = False
+            GPIO.output(37, GPIO.LOW)
+            SmartRoom.light_on = False
         else:
-            GPIO.output(self.LED_PIN, GPIO.HIGH)
-            self.light_on = True
+            GPIO.output(37, GPIO.HIGH)
+            SmartRoom.light_on = True
 
     def manage_window(self) -> None:
         # To be implemented

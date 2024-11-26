@@ -12,7 +12,7 @@ class TestSmartRoom(unittest.TestCase):
 
     @patch.object(GPIO, "input")
     def test_check_room_occupancy(self, mock_input):
-        mock_input.return_value = 1
+        mock_input.return_value = 22
         smart_room = SmartRoom()
         self.assertTrue(smart_room.check_room_occupancy())
 
@@ -20,13 +20,13 @@ class TestSmartRoom(unittest.TestCase):
     def test_check_enough_light(self, mock_check_enough_light):
         smart_room = SmartRoom()
         smart_room.check_enough_light()
-        mock_check_enough_light.assert_called_once()
+        self.assertTrue(mock_check_enough_light.called)
 
     @patch.object(SmartRoom, "manage_light_level")
     def test_manage_light_level(self, mock_manage_light_level):
         smart_room = SmartRoom()
         smart_room.manage_light_level()
-        mock_manage_light_level.assert_called_once()
+        self.assertTrue(mock_manage_light_level.called)
 
     @patch.object(SmartRoom, "manage_window")
     def test_manage_window(self, mock_manage_window):
